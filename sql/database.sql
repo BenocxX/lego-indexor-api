@@ -5,5 +5,3 @@ CREATE TABLE accounts (
 );
 
 INSERT INTO accounts(user_id) VALUES (1);
-INSERT INTO accounts(user_id) VALUES (2);
-INSERT INTO accounts(user_id) VALUES (10);
