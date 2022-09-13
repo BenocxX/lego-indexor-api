@@ -1,0 +1,32 @@
+version: "3.7"
+
+services:
+  api:
+    build: 
+      context: .
+      dockerfile: ./Docker/ASP/Dockerfile
+    container_name: asp
+    restart: always
+    links:
+      - database
+    ports:
+      - '80:80'
+
+  database:
+    build: 
+      context: .
+      dockerfile: ./Docker/PostgreSQL/Dockerfile
+    container_name: db
+    restart: always
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d/sql
+      - ./sql/database.sql:/docker-entrypoint-initdb.d/1-database.sql
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_DB: 'lego-indexor'
+      POSTGRES_USER: 'dev'
+      POSTGRES_PASSWORD: 'dev'
+
+volumes: 
+  sql:
