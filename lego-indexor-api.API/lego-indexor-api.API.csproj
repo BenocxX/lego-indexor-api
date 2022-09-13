@@ -12,4 +12,9 @@
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\lego-indexor-api.Core\lego-indexor-api.Core.csproj" />
+      <ProjectReference Include="..\lego-indexor-api.Infrastructure\lego-indexor-api.Infrastructure.csproj" />
+    </ItemGroup>
+
 </Project>
