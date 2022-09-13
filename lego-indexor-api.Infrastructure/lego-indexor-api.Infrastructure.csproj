@@ -11,4 +11,8 @@
       <ProjectReference Include="..\lego-indexor-api.Core\lego-indexor-api.Core.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Brokers" />
+    </ItemGroup>
+
 </Project>
