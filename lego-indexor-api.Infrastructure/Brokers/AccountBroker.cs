@@ -7,7 +7,7 @@ public class AccountBroker : IAccountBroker
 {
     public IEnumerable<Account> GetAccounts()
     {
-        using var context = new DBContext();
+        using var context = new Database();
         return context.Accounts.ToList();
     }
 }

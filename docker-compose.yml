@@ -11,6 +11,8 @@ services:
       - database
     ports:
       - '80:80'
+    environment:
+      DB_HOST: 'host.docker.internal'
 
   database:
     build: 
