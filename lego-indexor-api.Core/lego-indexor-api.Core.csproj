@@ -8,7 +8,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Interfaces" />
       <Folder Include="Models\DTOs" />
       <Folder Include="Models\Entities" />
       <Folder Include="Models\Mappers" />
