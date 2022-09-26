@@ -8,12 +8,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Models\DTOs" />
-      <Folder Include="Models\Mappers" />
-      <Folder Include="Services" />
-    </ItemGroup>
-
-    <ItemGroup>
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.0-preview.7.22376.2" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.0-preview.7.22376.2">
         <PrivateAssets>all</PrivateAssets>

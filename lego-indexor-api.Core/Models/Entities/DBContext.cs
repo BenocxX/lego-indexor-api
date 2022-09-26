@@ -16,7 +16,7 @@ namespace lego_indexor_api.Core.Models.Entities
         {
         }
 
-        public virtual DbSet<Account> Accounts { get; set; } = null!;
+        public virtual DbSet<User> Users { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -29,14 +29,22 @@ namespace lego_indexor_api.Core.Models.Entities
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Account>(entity =>
+            modelBuilder.Entity<User>(entity =>
             {
-                entity.HasKey(e => e.UserId)
-                    .HasName("accounts_pkey");
+                entity.ToTable("user");
 
-                entity.ToTable("accounts");
+                entity.HasIndex(e => e.Id, "user_id_uindex")
+                    .IsUnique();
 
-                entity.Property(e => e.UserId).HasColumnName("user_id");
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Password)
+                    .HasMaxLength(255)
+                    .HasColumnName("password");
+
+                entity.Property(e => e.Username)
+                    .HasMaxLength(255)
+                    .HasColumnName("username");
             });
 
             OnModelCreatingPartial(modelBuilder);
