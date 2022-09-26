@@ -5,7 +5,7 @@ create table "user"
     id       serial
         constraint user_pk
             primary key,
-    username varchar(255),
+    username varchar(255) not null,
     password varchar(255)
 );
 
@@ -15,4 +15,6 @@ alter table "user"
 create unique index user_id_uindex
     on "user" (id);
 
-INSERT INTO public."user" (id, username, password) VALUES (1, 'Mathis', 'Omega123*');
+create unique index user_username_uindex
+    on "user" (username);
+

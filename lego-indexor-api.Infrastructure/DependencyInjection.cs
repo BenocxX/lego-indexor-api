@@ -1,4 +1,3 @@
-using lego_indexor_api.Core.Interfaces;
 using lego_indexor_api.Core.Interfaces.Brokers;
 using lego_indexor_api.Infrastructure.Brokers;
 using Microsoft.Extensions.DependencyInjection;

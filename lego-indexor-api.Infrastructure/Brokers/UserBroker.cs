@@ -3,17 +3,20 @@ using lego_indexor_api.Core.Models.Entities;
 
 namespace lego_indexor_api.Infrastructure.Brokers;
 
-public class UserBroker : IUserBroker
+public class UserBroker : Broker, IUserBroker
 {
     public IEnumerable<User> GetUsers()
     {
-        using var database = new Database();
-        return database.Users.ToList();
+        return Database.Users.ToList();
     }
 
-    public User? GetUser(int id)
+    public User? GetUserById(int id)
     {
-        using var database = new Database();
-        return database.Users.Find(id);
+        return Database.Users.Find(id);
+    }
+
+    public User? GetUserByUsername(string? username)
+    {
+        return Database.Users.FirstOrDefault(u => u.Username == username);
     }
 }

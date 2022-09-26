@@ -13,11 +13,13 @@ public class AuthenticationService : IAuthenticationService
         _userBroker = userBroker;
     }
     
-    public User? Login(User user)
+    public User? Login(User currentUser)
     {
-        var users = _userBroker.GetUsers();
-        var loginUser = users.FirstOrDefault(u => SameUsernameAndPassword(u, user));
-        return loginUser;
+        if (!UserExists(currentUser))
+            return null;
+        
+        var user = _userBroker.GetUserByUsername(currentUser.Username)!;
+        return SamePassword(currentUser, user) ? user : null;
     }
 
     public User? Signup(User user)
@@ -25,8 +27,6 @@ public class AuthenticationService : IAuthenticationService
         return null;
     }
 
-    private bool SameUsernameAndPassword(User user1, User user2)
-        => SameUsername(user1, user2) && SamePassword(user1, user2);
-    private bool SameUsername(User user1, User user2) => user1.Username == user2.Username;
+    private bool UserExists(User user) => _userBroker.GetUserByUsername(user.Username) != null;
     private bool SamePassword(User user1, User user2) => user1.Password == user2.Password;
 }
