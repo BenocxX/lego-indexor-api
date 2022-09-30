@@ -4,6 +4,6 @@ namespace lego_indexor_api.Core.Interfaces.Services;
 
 public interface IAuthenticationService
 {
-    User? Login(User currentUser);
+    (User?, string) Login(User currentUser);
     (User?, string) Signup(User currentUser);
 }

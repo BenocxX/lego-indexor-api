@@ -13,13 +13,13 @@ public class AuthenticationService : IAuthenticationService
         _userBroker = userBroker;
     }
     
-    public User? Login(User currentUser)
+    public (User?, string) Login(User currentUser)
     {
         if (!UserExists(currentUser.Username))
-            return null;
+            return (null, "Invalid username or password.");
         
         var user = _userBroker.GetUserByUsername(currentUser.Username)!;
-        return ValidPassword(currentUser.Password, user) ? user : null;
+        return ValidPassword(currentUser.Password, user) ? (user, "") : (null, "Invalid username or password");
     }
 
     public (User?, string) Signup(User currentUser)
@@ -27,8 +27,8 @@ public class AuthenticationService : IAuthenticationService
         if (UserExists(currentUser.Username))
             return (null, "User already exists.");
         
-        var newUser = _userBroker.CreateUser(currentUser);
-        return (newUser, "Success");
+        var user = _userBroker.CreateUser(currentUser);
+        return (user, "");
     }
 
     private bool UserExists(string? username) => _userBroker.GetUserByUsername(username) != null;
