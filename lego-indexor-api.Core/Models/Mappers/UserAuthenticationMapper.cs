@@ -1,21 +1,20 @@
-
-using lego_indexor_api.Core.Models.DTOs;
+using lego_indexor_api.Core.Models.DTOs.AuthenticationRequests;
 using lego_indexor_api.Core.Models.Entities;
 
 namespace lego_indexor_api.Core.Models.Mappers;
 
-public class UserMapper : IMapper<User, AuthenticationLoginRequest>
+public class UserAuthenticationMapper : IMapper<User, AuthenticationRequest>
 {
-    public AuthenticationLoginRequest ModelToRequest(User input)
+    public AuthenticationRequest ModelToRequest(User input)
     {
-        return new AuthenticationLoginRequest
+        return new AuthenticationRequest()
         {
             Username = input.Username,
             Password = input.Password
         };
     }
 
-    public User RequestToModel(AuthenticationLoginRequest input)
+    public User RequestToModel(AuthenticationRequest input)
     {
         return new User
         {
