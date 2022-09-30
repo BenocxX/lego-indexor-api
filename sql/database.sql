@@ -6,7 +6,7 @@ create table "user"
         constraint user_pk
             primary key,
     username varchar(255) not null,
-    password varchar(255)
+    password bytea
 );
 
 alter table "user"
