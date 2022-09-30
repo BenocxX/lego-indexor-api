@@ -7,4 +7,5 @@ public interface IUserBroker
     IEnumerable<User> GetUsers();
     User? GetUserById(int id);
     User? GetUserByUsername(string? username);
+    User CreateUser(User user);
 }

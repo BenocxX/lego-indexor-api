@@ -11,4 +11,7 @@ public class UserRequest
     [Required]
     [StringLength(255)]
     public string? Password { get; set; }
+    
+    [StringLength(255)]
+    public string? ConfirmPassword { get; set; }
 }

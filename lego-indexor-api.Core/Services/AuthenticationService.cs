@@ -22,9 +22,13 @@ public class AuthenticationService : IAuthenticationService
         return SamePassword(currentUser, user) ? user : null;
     }
 
-    public User? Signup(User user)
+    public (User?, string) Signup(User currentUser)
     {
-        return null;
+        if (UserExists(currentUser))
+            return (null, "User already exists.");
+        
+        var user = _userBroker.CreateUser(currentUser);
+        return (user, "Success");
     }
 
     private bool UserExists(User user) => _userBroker.GetUserByUsername(user.Username) != null;

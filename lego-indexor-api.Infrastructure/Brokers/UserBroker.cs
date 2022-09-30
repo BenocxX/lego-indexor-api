@@ -19,4 +19,11 @@ public class UserBroker : Broker, IUserBroker
     {
         return Database.Users.FirstOrDefault(u => u.Username == username);
     }
+
+    public User CreateUser(User user)
+    {
+        var newUser = Database.Users.Add(user).Entity;
+        Database.SaveChanges();
+        return newUser;
+    }
 }

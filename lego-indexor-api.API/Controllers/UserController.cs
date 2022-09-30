@@ -22,10 +22,26 @@ public class UserController : Controller
     }
     
     [HttpPost("/login")]
-    public ActionResult<bool> Login(UserRequest request)
+    public ActionResult<User> Login(UserRequest request)
     {
         var user = _userMapper.RequestToModel(request);
         var loginUser = _authenticationService.Login(user);
-        return Ok(loginUser != null);
+        
+        if (loginUser == null)
+            return Ok("Invalid login details");
+        
+        return Ok(loginUser);
+    }
+    
+    [HttpPost("/signup")]
+    public ActionResult<User> Signup(UserRequest request)
+    {
+        if (request.Password != request.ConfirmPassword)
+            return Ok("Password does not match its confirmation.");
+        
+        var user = _userMapper.RequestToModel(request);
+        var (newUser, details) = _authenticationService.Signup(user);
+        
+        return Ok(details);
     }
 }
