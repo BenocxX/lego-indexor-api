@@ -4,18 +4,18 @@ using lego_indexor_api.Core.Models.Entities;
 
 namespace lego_indexor_api.Core.Models.Mappers;
 
-public class UserMapper : IMapper<User, UserRequest>
+public class UserMapper : IMapper<User, AuthenticationLoginRequest>
 {
-    public UserRequest ModelToRequest(User input)
+    public AuthenticationLoginRequest ModelToRequest(User input)
     {
-        return new UserRequest
+        return new AuthenticationLoginRequest
         {
             Username = input.Username,
             Password = input.Password
         };
     }
 
-    public User RequestToModel(UserRequest input)
+    public User RequestToModel(AuthenticationLoginRequest input)
     {
         return new User
         {

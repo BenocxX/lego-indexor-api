@@ -12,7 +12,7 @@ public static class DependencyInjection
     public static IServiceCollection AddApplicationCore(this IServiceCollection services)
     {
         services.AddScoped<IAuthenticationService, AuthenticationService>();
-        services.AddScoped<IMapper<User, UserRequest>, UserMapper>();
+        services.AddScoped<IMapper<User, AuthenticationLoginRequest>, UserMapper>();
         return services;
     }
 }

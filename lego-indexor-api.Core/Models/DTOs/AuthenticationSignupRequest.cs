@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace lego_indexor_api.Core.Models.DTOs;
 
-public class UserRequest
+public class AuthenticationSignupRequest
 {
     [Required]
     [StringLength(255)]
@@ -12,6 +12,7 @@ public class UserRequest
     [StringLength(255)]
     public string? Password { get; set; }
     
+    [Required]
     [StringLength(255)]
     public string? ConfirmPassword { get; set; }
 }

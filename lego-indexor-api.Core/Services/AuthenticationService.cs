@@ -13,24 +13,28 @@ public class AuthenticationService : IAuthenticationService
         _userBroker = userBroker;
     }
     
-    public User? Login(User currentUser)
+    public User? Login(string? username, string? password)
     {
-        if (!UserExists(currentUser))
+        if (!UserExists(username))
             return null;
         
-        var user = _userBroker.GetUserByUsername(currentUser.Username)!;
-        return SamePassword(currentUser, user) ? user : null;
+        var user = _userBroker.GetUserByUsername(username)!;
+        return ValidPassword(password, user) ? user : null;
     }
 
-    public (User?, string) Signup(User currentUser)
+    public (User?, string) Signup(string? username, string? password)
     {
-        if (UserExists(currentUser))
+        if (UserExists(username))
             return (null, "User already exists.");
         
-        var user = _userBroker.CreateUser(currentUser);
+        var user = _userBroker.CreateUser(new User
+        {
+            Username = username,
+            Password = password
+        });
         return (user, "Success");
     }
 
-    private bool UserExists(User user) => _userBroker.GetUserByUsername(user.Username) != null;
-    private bool SamePassword(User user1, User user2) => user1.Password == user2.Password;
+    private bool UserExists(string? username) => _userBroker.GetUserByUsername(username) != null;
+    private bool ValidPassword(string? password, User user) => password == user.Password;
 }

@@ -10,11 +10,11 @@ namespace lego_indexor_api.API.Controllers;
 [Route("api/v1/[controller]")]
 public class UserController : Controller
 {
-    private readonly IMapper<User, UserRequest> _userMapper;
+    private readonly IMapper<User, AuthenticationLoginRequest> _userMapper;
     private readonly IAuthenticationService _authenticationService;
     
     public UserController(
-        IMapper<User, UserRequest> userMapper, 
+        IMapper<User, AuthenticationLoginRequest> userMapper, 
         IAuthenticationService authenticationService)
     {
         _userMapper = userMapper;
@@ -22,10 +22,9 @@ public class UserController : Controller
     }
     
     [HttpPost("/login")]
-    public ActionResult<User> Login(UserRequest request)
+    public ActionResult<User> Login(AuthenticationLoginRequest request)
     {
-        var user = _userMapper.RequestToModel(request);
-        var loginUser = _authenticationService.Login(user);
+        var loginUser = _authenticationService.Login(request.Username, request.Password);
         
         if (loginUser == null)
             return Ok("Invalid login details");
@@ -34,13 +33,12 @@ public class UserController : Controller
     }
     
     [HttpPost("/signup")]
-    public ActionResult<User> Signup(UserRequest request)
+    public ActionResult<User> Signup(AuthenticationSignupRequest request)
     {
         if (request.Password != request.ConfirmPassword)
             return Ok("Password does not match its confirmation.");
-        
-        var user = _userMapper.RequestToModel(request);
-        var (newUser, details) = _authenticationService.Signup(user);
+
+        var (newUser, details) = _authenticationService.Signup(request.Username, request.Password);
         
         return Ok(details);
     }
