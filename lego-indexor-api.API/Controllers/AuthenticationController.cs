@@ -9,12 +9,12 @@ namespace lego_indexor_api.API.Controllers;
 
 [ApiController]
 [Route("api/v1/[controller]")]
-public class UserController : Controller
+public class AuthenticationController : Controller
 {
     private readonly IMapper<User, AuthenticationRequest> _userAuthenticationMapper;
     private readonly IAuthenticationService _authenticationService;
     
-    public UserController(
+    public AuthenticationController(
         IMapper<User, AuthenticationRequest> userAuthenticationMapper, 
         IAuthenticationService authenticationService)
     {
