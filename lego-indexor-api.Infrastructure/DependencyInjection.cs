@@ -10,6 +10,7 @@ public static class DependencyInjection
     {
         services.AddScoped<IUserBroker, UserBroker>();
         services.AddScoped<IConnectionBroker, ConnectionBroker>();
+        services.AddScoped<IIndexorBroker, IndexorBroker>();
         return services;
     }
 }

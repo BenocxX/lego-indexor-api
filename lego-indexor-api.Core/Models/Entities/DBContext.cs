@@ -17,6 +17,7 @@ namespace lego_indexor_api.Core.Models.Entities
         }
 
         public virtual DbSet<Connection> Connections { get; set; } = null!;
+        public virtual DbSet<Indexor> Indexors { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -53,6 +54,21 @@ namespace lego_indexor_api.Core.Models.Entities
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("connection_user_id__fk");
+            });
+
+            modelBuilder.Entity<Indexor>(entity =>
+            {
+                entity.ToTable("indexor");
+
+                entity.HasIndex(e => e.Id, "indexor_id_uindex")
+                    .IsUnique();
+
+                entity.HasIndex(e => e.UserId, "indexor_user_id_uindex")
+                    .IsUnique();
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.UserId).HasColumnName("user_id");
             });
 
             modelBuilder.Entity<User>(entity =>
