@@ -13,13 +13,16 @@ public class AuthenticationController : Controller
 {
     private readonly IMapper<User, AuthenticationRequest> _userAuthenticationMapper;
     private readonly IAuthenticationService _authenticationService;
+    private readonly IConnectionService _connectionService;
     
     public AuthenticationController(
         IMapper<User, AuthenticationRequest> userAuthenticationMapper, 
-        IAuthenticationService authenticationService)
+        IAuthenticationService authenticationService,
+        IConnectionService connectionService)
     {
         _userAuthenticationMapper = userAuthenticationMapper;
         _authenticationService = authenticationService;
+        _connectionService = connectionService;
     }
     
     [HttpPost("/login")]
@@ -30,8 +33,21 @@ public class AuthenticationController : Controller
         
         if (user == null)
             return Ok(new AuthenticationResponse(false, details));
+
+        var token = _connectionService.CreateNewConnection(user);
         
-        return Ok(new AuthenticationResponse(true, userId: user.Id));
+        return Ok(new AuthenticationResponse(true, userId: user.Id, token: token));
+    }
+    
+    [HttpPost("/login/token")]
+    public ActionResult<AuthenticationResponse> LoginToken(string token)
+    {
+        var userId = _connectionService.Login(token);
+        
+        if (userId == null)
+            return Ok(new AuthenticationResponse(false, "Invalid token."));
+        
+        return Ok(new AuthenticationResponse(true, userId: userId));
     }
     
     [HttpPost("/signup")]
@@ -45,7 +61,9 @@ public class AuthenticationController : Controller
 
         if (user == null)
             return Ok(new AuthenticationResponse(false, details));
+        
+        var token = _connectionService.CreateNewConnection(user);
 
-        return Ok(new AuthenticationResponse(true, userId: user.Id));
+        return Ok(new AuthenticationResponse(true, userId: user.Id, token: token));
     }
 }

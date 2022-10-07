@@ -16,6 +16,7 @@ namespace lego_indexor_api.Core.Models.Entities
         {
         }
 
+        public virtual DbSet<Connection> Connections { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -29,6 +30,31 @@ namespace lego_indexor_api.Core.Models.Entities
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Connection>(entity =>
+            {
+                entity.ToTable("connection");
+
+                entity.HasIndex(e => e.Id, "connection_id_uindex")
+                    .IsUnique();
+
+                entity.HasIndex(e => e.Token, "connection_token_uindex")
+                    .IsUnique();
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Token)
+                    .HasMaxLength(255)
+                    .HasColumnName("token");
+
+                entity.Property(e => e.UserId).HasColumnName("user_id");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Connections)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("connection_user_id__fk");
+            });
+
             modelBuilder.Entity<User>(entity =>
             {
                 entity.ToTable("user");
@@ -36,11 +62,12 @@ namespace lego_indexor_api.Core.Models.Entities
                 entity.HasIndex(e => e.Id, "user_id_uindex")
                     .IsUnique();
 
+                entity.HasIndex(e => e.Username, "user_username_uindex")
+                    .IsUnique();
+
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.Password)
-                    .HasMaxLength(255)
-                    .HasColumnName("password");
+                entity.Property(e => e.Password).HasColumnName("password");
 
                 entity.Property(e => e.Username)
                     .HasMaxLength(255)

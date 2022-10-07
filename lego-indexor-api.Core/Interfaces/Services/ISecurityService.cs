@@ -4,4 +4,5 @@ public interface ISecurityService
 {
     public byte[] Hash(string? plainText);
     public bool CompareHash(string plainText, byte[]? hashedPassword);
+    public string GetRandomHashedString();
 }

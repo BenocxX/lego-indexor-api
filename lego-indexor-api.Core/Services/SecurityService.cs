@@ -25,4 +25,13 @@ public class SecurityService : ISecurityService
         var bytesPlainText = Encoding.ASCII.GetBytes(plainText);
         return _cryptographyService.CompareByteArrays(bytesPlainText, hashedPassword);
     }
+
+    public string GetRandomHashedString()
+    {
+        var uniqueString =  Guid.NewGuid().ToString();
+        var unixTime = DateTimeOffset.Now.ToUnixTimeSeconds().ToString();
+        var randomBytes = Encoding.ASCII.GetBytes(uniqueString + unixTime);
+        var hashedBytes = _cryptographyService.GenerateSaltedHash(randomBytes, _salt);
+        return Convert.ToBase64String(hashedBytes);
+    }
 }

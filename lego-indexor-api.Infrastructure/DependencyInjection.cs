@@ -9,6 +9,7 @@ public static class DependencyInjection
     public static IServiceCollection AddInfrastructure(this IServiceCollection services)
     {
         services.AddScoped<IUserBroker, UserBroker>();
+        services.AddScoped<IConnectionBroker, ConnectionBroker>();
         return services;
     }
 }
