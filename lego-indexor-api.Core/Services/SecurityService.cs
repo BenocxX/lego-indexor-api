@@ -20,6 +20,12 @@ public class SecurityService : ISecurityService
         return _cryptographyService.GenerateSaltedHash(bytes, _salt);
     }
 
+    public string HashBase64(string plainText)
+    {
+        var bytes = Hash(plainText);
+        return Convert.ToBase64String(bytes);
+    }
+
     public bool CompareHash(string plainText, byte[]? hashedPassword)
     {
         var bytesPlainText = Encoding.ASCII.GetBytes(plainText);

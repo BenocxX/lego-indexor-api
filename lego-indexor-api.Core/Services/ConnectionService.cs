@@ -19,10 +19,11 @@ public class ConnectionService : IConnectionService
     public string CreateNewConnection(User user)
     {
         var token = _securityService.GetRandomHashedString();
+        var hashedToken = _securityService.HashBase64(token);
         var connection = new Connection
         {
             UserId = user.Id,
-            Token = token
+            Token = hashedToken
         };
         _connectionBroker.CreateConnection(connection);
         return token;
@@ -30,7 +31,8 @@ public class ConnectionService : IConnectionService
 
     public int? Login(string token)
     {
-        var connection = _connectionBroker.GetConnectionByToken(token);
+        var hashedToken = _securityService.HashBase64(token);
+        var connection = _connectionBroker.GetConnectionByToken(hashedToken);
         return connection?.UserId;
     }
 }
