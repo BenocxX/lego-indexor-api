@@ -18,4 +18,8 @@
       <ProjectReference Include="..\lego-indexor-api.Infrastructure\lego-indexor-api.Infrastructure.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="images" />
+    </ItemGroup>
+
 </Project>
