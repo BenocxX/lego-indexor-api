@@ -40,9 +40,9 @@ public class AuthenticationController : Controller
     }
     
     [HttpPost("/login/token")]
-    public ActionResult<AuthenticationResponse> LoginToken(string token)
+    public ActionResult<AuthenticationResponse> LoginToken(AuthenticationTokenRequest request)
     {
-        var userId = _connectionService.Login(token);
+        var userId = _connectionService.Login(request.Token!);
         
         if (userId == null)
             return Ok(new AuthenticationResponse(false, "Invalid token."));
