@@ -20,7 +20,7 @@ public class SecurityService : ISecurityService
         return _cryptographyService.GenerateSaltedHash(bytes, _salt);
     }
 
-    public string HashBase64(string plainText)
+    public string HashBase64(string? plainText)
     {
         var bytes = Hash(plainText);
         return Convert.ToBase64String(bytes);
@@ -32,7 +32,7 @@ public class SecurityService : ISecurityService
         return _cryptographyService.CompareByteArrays(bytesPlainText, hashedPassword);
     }
 
-    public string GetRandomHashedString()
+    public string? GetRandomHashedString()
     {
         var uniqueString =  Guid.NewGuid().ToString();
         var unixTime = DateTimeOffset.Now.ToUnixTimeSeconds().ToString();

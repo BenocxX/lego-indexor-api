@@ -16,7 +16,7 @@ public class ConnectionService : IConnectionService
         _securityService = securityService;
     }
     
-    public string CreateNewConnection(User user)
+    public string? CreateNewConnection(User user)
     {
         var token = _securityService.GetRandomHashedString();
         var hashedToken = _securityService.HashBase64(token);
@@ -29,7 +29,7 @@ public class ConnectionService : IConnectionService
         return token;
     }
 
-    public int? Login(string token)
+    public int? Login(string? token)
     {
         var hashedToken = _securityService.HashBase64(token);
         var connection = _connectionBroker.GetConnectionByToken(hashedToken);

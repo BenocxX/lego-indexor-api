@@ -17,7 +17,7 @@ public class SecurityController : Controller
         _connectionService = connectionService;
     }
     
-    protected bool Authenticate(string token)
+    protected bool Authenticate(string? token)
     {
         var userId = _connectionService.Login(token);
         
