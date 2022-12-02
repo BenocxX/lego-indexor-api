@@ -6,4 +6,5 @@ public interface ISecurityService
     public string HashBase64(string? plainText);
     public bool CompareHash(string plainText, byte[]? hashedPassword);
     public string? GetRandomHashedString();
+    public string GetRandomString(int length);
 }

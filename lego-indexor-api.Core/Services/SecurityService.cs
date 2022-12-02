@@ -40,4 +40,12 @@ public class SecurityService : ISecurityService
         var hashedBytes = _cryptographyService.GenerateSaltedHash(randomBytes, _salt);
         return Convert.ToBase64String(hashedBytes);
     }
+    
+    public string GetRandomString(int length)
+    {
+        const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        var random = new Random();
+        return new string(Enumerable.Repeat(chars, length)
+            .Select(s => s[random.Next(s.Length)]).ToArray());
+    }
 }

@@ -1,6 +1,10 @@
 using System.Net.WebSockets;
 using System.Text;
 using System.Text.Json;
+using lego_indexor_api.Core.Interfaces.Brokers;
+using lego_indexor_api.Core.Models.Entities;
+using lego_indexor_api.Core.Services;
+using lego_indexor_api.Infrastructure.Brokers;
 
 namespace lego_indexor_api.API;
 
@@ -9,6 +13,7 @@ public class WebSocketServer
     private readonly HttpContext _context;
     private WebSocket? _webSocket;
     private readonly byte[] _buffer;
+    private readonly IRaspberryPiBroker _raspberryPiBroker;
 
     public WebSocketConnection? Connection;
 
@@ -18,6 +23,7 @@ public class WebSocketServer
     {
         _context = context;
         _buffer = new byte[256];
+        _raspberryPiBroker = new RaspberryPiBroker();
     }
     
     public async Task Run()
@@ -44,14 +50,33 @@ public class WebSocketServer
         }
     }
 
-    public void OnClientConnection(string? id)
+    public void OnClientConnection(WebSocketRequest message)
     {
-        if (id == null)
+        if (message.macAddress == null)
             return;
         
-        Connection = new WebSocketConnection(id, true);
+        Connection = new WebSocketConnection(message.macAddress, true);
         WebSocketManager.Add(Connection, this);
-        Console.WriteLine($"Connection ID: {Connection.Id}");
+
+        var raspberryPi = _raspberryPiBroker.GetRaspberryPiByMacAddress(message.macAddress);
+        if (raspberryPi == null)
+        {
+            var securityService = new SecurityService(new CryptographyService());
+            var code = securityService.GetRandomString(6);
+            
+            raspberryPi = _raspberryPiBroker.CreateRaspberryPi(new Raspberrypi
+            {
+                MacAddress = message.macAddress,
+                IpAddress = message.ip ?? "",
+                Code = code
+            });
+        }
+        else if (raspberryPi.IpAddress != message.ip && message.ip != null)
+        {
+            _raspberryPiBroker.UpdateIpAddress(raspberryPi, message.ip);
+        }
+        
+        Console.WriteLine($"Connection ID: [{Connection.Id}] - Code: [{raspberryPi.Code}]");
     }
 
     public async Task OnMessage()
@@ -66,7 +91,7 @@ public class WebSocketServer
         switch (messageObj.messageType)
         {
             case MessageType.NewConnection:
-                OnClientConnection(messageObj.newConnectionId);
+                OnClientConnection(messageObj);
                 break;
             case MessageType.PictureTaken:
                 break;

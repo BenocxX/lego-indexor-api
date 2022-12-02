@@ -18,6 +18,7 @@ namespace lego_indexor_api.Core.Models.Entities
 
         public virtual DbSet<Connection> Connections { get; set; } = null!;
         public virtual DbSet<Indexor> Indexors { get; set; } = null!;
+        public virtual DbSet<Raspberrypi> Raspberrypis { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -69,6 +70,38 @@ namespace lego_indexor_api.Core.Models.Entities
                 entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.UserId).HasColumnName("user_id");
+            });
+
+            modelBuilder.Entity<Raspberrypi>(entity =>
+            {
+                entity.ToTable("raspberrypi");
+
+                entity.HasIndex(e => e.Id, "raspberrypi_id_uindex")
+                    .IsUnique();
+
+                entity.HasIndex(e => e.MacAddress, "raspberrypi_mac_address_uindex")
+                    .IsUnique();
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Code)
+                    .HasMaxLength(6)
+                    .HasColumnName("code");
+
+                entity.Property(e => e.IpAddress)
+                    .HasMaxLength(15)
+                    .HasColumnName("ip_address");
+
+                entity.Property(e => e.MacAddress)
+                    .HasMaxLength(17)
+                    .HasColumnName("mac_address");
+
+                entity.Property(e => e.UserId).HasColumnName("user_id");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Raspberrypis)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("raspberrypi_user_id_fk");
             });
 
             modelBuilder.Entity<User>(entity =>
