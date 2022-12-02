@@ -10,6 +10,10 @@ public class PhotoController : Controller
     [HttpGet]
     public async Task<IActionResult> Index(string id)
     {
+       var directory = new DirectoryInfo("/Users/mathiscote/Ecole/Session 5/iot_III/lego/lego-indexor-api/lego-indexor-api.API/images");
+        foreach (var file in directory.GetFiles())
+            file.Delete(); 
+    
         var server = WebSocketManager.GetServer(new WebSocketConnection(id, true));
         if (server == null)
             return Json(new { Status = 501, Message = "Web socket server not found." });
