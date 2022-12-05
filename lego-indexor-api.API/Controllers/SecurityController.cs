@@ -9,17 +9,17 @@ namespace lego_indexor_api.API.Controllers;
 [Route("api/v1/[controller]")]
 public class SecurityController : Controller
 {
-    private readonly IConnectionService _connectionService;
+    protected readonly IConnectionService ConnectionService;
     protected int UserId;
     
     public SecurityController(IConnectionService connectionService)
     {
-        _connectionService = connectionService;
+        ConnectionService = connectionService;
     }
     
     protected bool Authenticate(string? token)
     {
-        var userId = _connectionService.Login(token);
+        var userId = ConnectionService.Login(token);
         
         if (userId != null)
             UserId = userId.Value;

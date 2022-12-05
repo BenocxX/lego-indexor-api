@@ -1,3 +1,5 @@
+using lego_indexor_api.API.Websockets;
+
 namespace lego_indexor_api.API;
 
 public static class WebSocketManager

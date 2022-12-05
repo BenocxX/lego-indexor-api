@@ -1,4 +1,4 @@
-namespace lego_indexor_api.API;
+namespace lego_indexor_api.API.Websockets;
 
 public class WebSocketConnection
 {

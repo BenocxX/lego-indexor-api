@@ -20,6 +20,11 @@ public class RaspberryPiBroker: Broker, IRaspberryPiBroker
         return Database.Raspberrypis.FirstOrDefault(r => r.MacAddress == macAddress);
     }
 
+    public Raspberrypi? GetRaspberryPiByUserId(int? userId)
+    {
+        return Database.Raspberrypis.FirstOrDefault(r => r.UserId == userId);
+    }
+
     public Raspberrypi CreateRaspberryPi(Raspberrypi raspberrypi)
     {
         var newRaspberryPi = Database.Raspberrypis.Add(raspberrypi).Entity;

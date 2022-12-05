@@ -1,9 +1,6 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace lego_indexor_api.Core.Models.DTOs;
 
-public class ScanRequest
+public class ScanRequest : TokenRequest
 {
-    [Required]
-    public string? Token { get; set; }
+
 }

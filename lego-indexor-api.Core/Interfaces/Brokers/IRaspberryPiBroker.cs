@@ -7,6 +7,7 @@ public interface IRaspberryPiBroker
     IEnumerable<Raspberrypi> GetRaspberryPies();
     Raspberrypi? GetRaspberryPiById(int id);
     Raspberrypi? GetRaspberryPiByMacAddress(string? macAddress);
+    Raspberrypi? GetRaspberryPiByUserId(int? userId);
     Raspberrypi CreateRaspberryPi(Raspberrypi raspberrypi);
     Raspberrypi UpdateIpAddress(Raspberrypi raspberrypi, string ip);
 }

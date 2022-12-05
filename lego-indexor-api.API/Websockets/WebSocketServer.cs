@@ -1,6 +1,7 @@
 using System.Net.WebSockets;
 using System.Text;
 using System.Text.Json;
+using lego_indexor_api.API.Websockets;
 using lego_indexor_api.Core.Interfaces.Brokers;
 using lego_indexor_api.Core.Models.Entities;
 using lego_indexor_api.Core.Services;

@@ -23,10 +23,10 @@ public class IndexorController : SecurityController
     public ActionResult<ScanResponse> Scan(ScanRequest request)
     {
         if (!Authenticate(request.Token))
-            return Ok(new ScanResponse(false));
+            return Ok(new ScanResponse(false, false));
 
         // var indexor = _indexorBroker.GetIndexorByUserId(UserId);
         
-        return Ok(new ScanResponse(true));
+        return Ok(new ScanResponse(true, true));
     }
 }
