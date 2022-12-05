@@ -10,4 +10,5 @@ public interface IRaspberryPiBroker
     Raspberrypi? GetRaspberryPiByUserId(int? userId);
     Raspberrypi CreateRaspberryPi(Raspberrypi raspberrypi);
     Raspberrypi UpdateIpAddress(Raspberrypi raspberrypi, string ip);
+    Raspberrypi UpdateUserId(Raspberrypi raspberrypi, int userId);
 }

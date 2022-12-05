@@ -38,4 +38,11 @@ public class RaspberryPiBroker: Broker, IRaspberryPiBroker
         Database.SaveChanges();
         return raspberrypi;
     }
+
+    public Raspberrypi UpdateUserId(Raspberrypi raspberrypi, int userId)
+    {
+        raspberrypi.UserId = userId;
+        Database.SaveChanges();
+        return raspberrypi;
+    }
 }
