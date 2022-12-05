@@ -18,7 +18,7 @@ namespace lego_indexor_api.Core.Models.Entities
 
         public virtual DbSet<Connection> Connections { get; set; } = null!;
         public virtual DbSet<Indexor> Indexors { get; set; } = null!;
-        public virtual DbSet<Raspberrypi> Raspberrypis { get; set; } = null!;
+        public virtual DbSet<RaspberryPi> Raspberrypis { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -72,7 +72,7 @@ namespace lego_indexor_api.Core.Models.Entities
                 entity.Property(e => e.UserId).HasColumnName("user_id");
             });
 
-            modelBuilder.Entity<Raspberrypi>(entity =>
+            modelBuilder.Entity<RaspberryPi>(entity =>
             {
                 entity.ToTable("raspberrypi");
 

@@ -5,44 +5,44 @@ namespace lego_indexor_api.Infrastructure.Brokers;
 
 public class RaspberryPiBroker: Broker, IRaspberryPiBroker
 {
-    public IEnumerable<Raspberrypi> GetRaspberryPies()
+    public IEnumerable<RaspberryPi> GetRaspberryPies()
     {
         return Database.Raspberrypis.ToList();
     }
 
-    public Raspberrypi? GetRaspberryPiById(int id)
+    public RaspberryPi? GetRaspberryPiById(int id)
     {
         return Database.Raspberrypis.Find(id);
     }
 
-    public Raspberrypi? GetRaspberryPiByMacAddress(string? macAddress)
+    public RaspberryPi? GetRaspberryPiByMacAddress(string? macAddress)
     {
         return Database.Raspberrypis.FirstOrDefault(r => r.MacAddress == macAddress);
     }
 
-    public Raspberrypi? GetRaspberryPiByUserId(int? userId)
+    public RaspberryPi? GetRaspberryPiByUserId(int? userId)
     {
         return Database.Raspberrypis.FirstOrDefault(r => r.UserId == userId);
     }
 
-    public Raspberrypi CreateRaspberryPi(Raspberrypi raspberrypi)
+    public RaspberryPi CreateRaspberryPi(RaspberryPi raspberryPi)
     {
-        var newRaspberryPi = Database.Raspberrypis.Add(raspberrypi).Entity;
+        var newRaspberryPi = Database.Raspberrypis.Add(raspberryPi).Entity;
         Database.SaveChanges();
         return newRaspberryPi;
     }
 
-    public Raspberrypi UpdateIpAddress(Raspberrypi raspberrypi, string ip)
+    public RaspberryPi UpdateIpAddress(RaspberryPi raspberryPi, string ip)
     {
-        raspberrypi.IpAddress = ip;
+        raspberryPi.IpAddress = ip;
         Database.SaveChanges();
-        return raspberrypi;
+        return raspberryPi;
     }
 
-    public Raspberrypi UpdateUserId(Raspberrypi raspberrypi, int userId)
+    public RaspberryPi UpdateUserId(RaspberryPi raspberryPi, int userId)
     {
-        raspberrypi.UserId = userId;
+        raspberryPi.UserId = userId;
         Database.SaveChanges();
-        return raspberrypi;
+        return raspberryPi;
     }
 }

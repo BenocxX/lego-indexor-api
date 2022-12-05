@@ -4,11 +4,11 @@ namespace lego_indexor_api.Core.Interfaces.Brokers;
 
 public interface IRaspberryPiBroker
 {
-    IEnumerable<Raspberrypi> GetRaspberryPies();
-    Raspberrypi? GetRaspberryPiById(int id);
-    Raspberrypi? GetRaspberryPiByMacAddress(string? macAddress);
-    Raspberrypi? GetRaspberryPiByUserId(int? userId);
-    Raspberrypi CreateRaspberryPi(Raspberrypi raspberrypi);
-    Raspberrypi UpdateIpAddress(Raspberrypi raspberrypi, string ip);
-    Raspberrypi UpdateUserId(Raspberrypi raspberrypi, int userId);
+    IEnumerable<RaspberryPi> GetRaspberryPies();
+    RaspberryPi? GetRaspberryPiById(int id);
+    RaspberryPi? GetRaspberryPiByMacAddress(string? macAddress);
+    RaspberryPi? GetRaspberryPiByUserId(int? userId);
+    RaspberryPi CreateRaspberryPi(RaspberryPi raspberryPi);
+    RaspberryPi UpdateIpAddress(RaspberryPi raspberryPi, string ip);
+    RaspberryPi UpdateUserId(RaspberryPi raspberryPi, int userId);
 }

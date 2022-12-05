@@ -65,7 +65,7 @@ public class WebSocketServer
             var securityService = new SecurityService(new CryptographyService());
             var code = securityService.GetRandomString(6);
             
-            raspberryPi = _raspberryPiBroker.CreateRaspberryPi(new Raspberrypi
+            raspberryPi = _raspberryPiBroker.CreateRaspberryPi(new RaspberryPi
             {
                 MacAddress = message.macAddress,
                 IpAddress = message.ip ?? "",

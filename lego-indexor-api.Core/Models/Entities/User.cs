@@ -8,7 +8,7 @@ namespace lego_indexor_api.Core.Models.Entities
         public User()
         {
             Connections = new HashSet<Connection>();
-            Raspberrypis = new HashSet<Raspberrypi>();
+            Raspberrypis = new HashSet<RaspberryPi>();
         }
 
         public int Id { get; set; }
@@ -16,6 +16,6 @@ namespace lego_indexor_api.Core.Models.Entities
         public byte[]? Password { get; set; }
 
         public virtual ICollection<Connection> Connections { get; set; }
-        public virtual ICollection<Raspberrypi> Raspberrypis { get; set; }
+        public virtual ICollection<RaspberryPi> Raspberrypis { get; set; }
     }
 }

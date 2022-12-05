@@ -50,15 +50,17 @@ public class PhotoController : SecurityController
 
         var response = await GetServerResponse(server);
 
-        await DownloadFileAsync(response.url!, $"images/{response.fileName}");
+        // await DownloadFileAsync($"http://{response.ip}/{response.fileCamTop}", $"{path}/{response.fileCamTop}");
+        // await DownloadFileAsync($"http://{response.ip}/{response.fileCamSide}", $"{path}/{response.fileCamSide}");
         
         server.IsReading = true;
         return Json(new
         {
             Status = 200, 
-            FileName = response.fileName,
-            Ip = response.ip,
-            Url = response.url
+            IsSuccess = true,
+            FileCamTop = response.fileCamTop,
+            FileCameSide = response.fileCamSide,
+            Ip = response.ip
         });
     }
 
