@@ -1,7 +1,9 @@
 using System.Text.Json;
+using CliWrap.Buffered;
 using lego_indexor_api.API.Websockets;
 using lego_indexor_api.Core.Interfaces.Brokers;
 using lego_indexor_api.Core.Models.Entities;
+using lego_indexor_api.Core.Services;
 using lego_indexor_api.Infrastructure.Brokers;
 
 namespace lego_indexor_api.API.Services;
@@ -76,6 +78,26 @@ public class IndexorService
         _server.IsReading = true;
         
         return response;
+    }
+
+    public async Task<string> Predict(string file)
+    {
+        var commandLineService = new CommandLineService();
+        var result = await commandLineService.RunPython($"../lego-indexor-api.Core/machine-learning/predict.py {file}");
+        if (result.ExitCode != 0)
+        {
+            Console.WriteLine(result.StandardError);
+            return "";
+        }
+        
+        var output = result.StandardOutput;
+        
+        const string startIndicator = "PREDICTION: [";
+        const string endIndicator = "]";
+        var predictionIndex = output.LastIndexOf(startIndicator, StringComparison.Ordinal) + startIndicator.Length;
+        var endPredictionIndex = output.LastIndexOf(endIndicator, StringComparison.Ordinal);
+        
+        return output[predictionIndex..endPredictionIndex];
     }
     
     private async Task<WebSocketRequest> GetServerResponse(WebSocketServer server)

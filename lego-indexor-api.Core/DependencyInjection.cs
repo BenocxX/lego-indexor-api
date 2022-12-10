@@ -18,6 +18,7 @@ public static class DependencyInjection
         services.AddScoped<ISecurityService, SecurityService>();
         services.AddScoped<ICryptographyService, CryptographyService>();
         services.AddScoped<IConnectionService, ConnectionService>();
+        services.AddScoped<ICommandLineService, CommandLineService>();
         return services;
     }
 }
