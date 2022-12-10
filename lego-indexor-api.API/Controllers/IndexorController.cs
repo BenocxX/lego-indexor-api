@@ -10,14 +10,9 @@ namespace lego_indexor_api.API.Controllers;
 [Route("api/v1/[controller]")]
 public class IndexorController : SecurityController
 {
-    private ICommandLineService _commandLineService;
-    
-    public IndexorController(IConnectionService connectionService,
-        ICommandLineService commandLineService)
+    public IndexorController(IConnectionService connectionService)
         : base(connectionService)
-    {
-        _commandLineService = commandLineService;
-    }
+    { }
 
     [HttpPost("/scan")]
     public async Task<ActionResult<ScanResponse>> Scan(ScanRequest request)
@@ -31,11 +26,8 @@ public class IndexorController : SecurityController
         
         if (!indexorService.AttachToServer())
             return Json(new { Status = 501, Message = "Web socket server not found." });
-
-        Console.WriteLine("Taking pictures");
+        
         await indexorService.TakePictures();
-
-        Console.WriteLine("Downloading");
         var response = await indexorService.DownloadPictures();
 
         Console.WriteLine("Predicting");
@@ -44,7 +36,7 @@ public class IndexorController : SecurityController
         if (string.IsNullOrEmpty(prediction)) 
             return Ok(new ScanResponse(false, true));
         
-        Console.WriteLine($"Prediction: {prediction}");
+        Console.WriteLine(prediction);
         
         return Ok(new ScanResponse(true, true));
     }
