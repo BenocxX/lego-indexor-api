@@ -33,20 +33,25 @@ public class IndexorController : SecurityController
     }
 
     [HttpPost("/learn")]
-    public async Task<ActionResult<ScanResponse>> TakePicture(LearnScanRequest request)
+    public async Task<ActionResult<ScanResponse>> Learn(LearnScanRequest request)
     {
         if (!Authenticate(request.Token))
             return Ok(new ScanResponse(false, false));
         
-        ClearImageDirectory();
-
         var indexorService = new IndexorService(UserId);
         
         if (!indexorService.AttachToServer())
             return Json(new { Status = 501, Message = "Web socket server not found." });
         
-        await indexorService.TakePictures();
-        await indexorService.DownloadPictures($"learn/{request.FolderName}");
+        for (var i = 0; i < 5; i++)
+        {
+            var index = i + 1;
+            await indexorService.TakePictures();
+            await indexorService.DownloadPictures($"learn/{request.FolderName}");
+            Console.WriteLine($"Picture #{index} has been saved!");
+        }
+        
+        Console.WriteLine("Done! You can now move the LEGO piece a little bit.");
         
         return Ok(new ScanResponse(true, true));
     }

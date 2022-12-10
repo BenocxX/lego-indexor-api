@@ -59,7 +59,22 @@ public class IndexorService
         await DownloadFileAsync($"http://{response.ip}/{response.fileCamTop}", $"{path}/{response.fileCamTop}");
         await DownloadFileAsync($"http://{response.ip}/{response.fileCamSide}", $"{path}/{response.fileCamSide}");
         
+        var message = new WebSocketResponse
+        {
+            messageType = MessageType.PictureDownloaded,
+            id = _raspberryPi.MacAddress,
+            files = new []
+            {
+                response.fileCamTop,
+                response.fileCamSide
+            }
+        };
+        var jsonString = JsonSerializer.Serialize(message);
+        
+        await _server.Send(jsonString);
+        
         _server.IsReading = true;
+        
         return response;
     }
     

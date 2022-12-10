@@ -117,7 +117,7 @@ public class WebSocketServer
     
     public async Task<string> Read()
     {
-        if (_webSocket == null)
+        if (_webSocket == null || !IsOpen())
             return string.Empty;
         var result = await _webSocket.ReceiveAsync(_buffer, CancellationToken.None);
         return Encoding.ASCII.GetString(_buffer, 0, result.Count);
