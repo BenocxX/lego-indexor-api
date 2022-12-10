@@ -80,14 +80,14 @@ public class IndexorService
         return response;
     }
 
-    public async Task<string> Predict(string file)
+    public async Task<(string topPrediction, string sidePrediction)?> Predict(string topCamFile, string sideCamFile)
     {
         var commandLineService = new CommandLineService();
-        var result = await commandLineService.RunPython($"../lego-indexor-api.Core/machine-learning/predict.py {file}");
+        var result = await commandLineService.RunPython($"../lego-indexor-api.Core/machine-learning/predict.py {topCamFile} {sideCamFile}");
         if (result.ExitCode != 0)
         {
             Console.WriteLine(result.StandardError);
-            return "";
+            return null;
         }
         
         var output = result.StandardOutput;
@@ -96,8 +96,13 @@ public class IndexorService
         const string endIndicator = "]";
         var predictionIndex = output.LastIndexOf(startIndicator, StringComparison.Ordinal) + startIndicator.Length;
         var endPredictionIndex = output.LastIndexOf(endIndicator, StringComparison.Ordinal);
+        var prediction = output[predictionIndex..endPredictionIndex];
+
+        var predictions = prediction.Split(" | ");
+        var topPrediction = predictions[0];
+        var sidePrediction = predictions[1];
         
-        return output[predictionIndex..endPredictionIndex];
+        return (topPrediction, sidePrediction);
     }
     
     private async Task<WebSocketRequest> GetServerResponse(WebSocketServer server)

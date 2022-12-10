@@ -31,12 +31,12 @@ public class IndexorController : SecurityController
         var response = await indexorService.DownloadPictures();
 
         Console.WriteLine("Predicting");
-        var prediction = await indexorService.Predict($"./images/{response.fileCamTop}");
+        var prediction = await indexorService.Predict($"./images/{response.fileCamTop}", $"./images/{response.fileCamSide}");
         
-        if (string.IsNullOrEmpty(prediction)) 
+        if (prediction == null) 
             return Ok(new ScanResponse(false, true));
         
-        Console.WriteLine(prediction);
+        Console.WriteLine($"Prediction: {prediction}");
         
         return Ok(new ScanResponse(true, true));
     }
