@@ -18,7 +18,8 @@ namespace lego_indexor_api.Core.Models.Entities
 
         public virtual DbSet<Connection> Connections { get; set; } = null!;
         public virtual DbSet<Indexor> Indexors { get; set; } = null!;
-        public virtual DbSet<RaspberryPi> Raspberrypis { get; set; } = null!;
+        public virtual DbSet<Lego> Legos { get; set; } = null!;
+        public virtual DbSet<Raspberrypi> Raspberrypis { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -72,7 +73,31 @@ namespace lego_indexor_api.Core.Models.Entities
                 entity.Property(e => e.UserId).HasColumnName("user_id");
             });
 
-            modelBuilder.Entity<RaspberryPi>(entity =>
+            modelBuilder.Entity<Lego>(entity =>
+            {
+                entity.ToTable("lego");
+
+                entity.HasIndex(e => e.Id, "lego_id_uindex")
+                    .IsUnique();
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Count).HasColumnName("count");
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(1000)
+                    .HasColumnName("description");
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(255)
+                    .HasColumnName("name");
+
+                entity.Property(e => e.Type)
+                    .HasMaxLength(255)
+                    .HasColumnName("type");
+            });
+
+            modelBuilder.Entity<Raspberrypi>(entity =>
             {
                 entity.ToTable("raspberrypi");
 

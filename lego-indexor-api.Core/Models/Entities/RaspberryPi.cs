@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace lego_indexor_api.Core.Models.Entities
 {
-    public partial class RaspberryPi
+    public partial class Raspberrypi
     {
         public int Id { get; set; }
         public string MacAddress { get; set; } = null!;

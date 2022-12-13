@@ -5,41 +5,41 @@ namespace lego_indexor_api.Infrastructure.Brokers;
 
 public class RaspberryPiBroker: Broker, IRaspberryPiBroker
 {
-    public IEnumerable<RaspberryPi> GetRaspberryPies()
+    public IEnumerable<Raspberrypi> GetRaspberryPies()
     {
         return Database.Raspberrypis.ToList();
     }
 
-    public RaspberryPi? GetRaspberryPiById(int id)
+    public Raspberrypi? GetRaspberryPiById(int id)
     {
         return Database.Raspberrypis.Find(id);
     }
 
-    public RaspberryPi? GetRaspberryPiByMacAddress(string? macAddress)
+    public Raspberrypi? GetRaspberryPiByMacAddress(string? macAddress)
     {
         return Database.Raspberrypis.FirstOrDefault(r => r.MacAddress == macAddress);
     }
 
-    public RaspberryPi? GetRaspberryPiByUserId(int? userId)
+    public Raspberrypi? GetRaspberryPiByUserId(int? userId)
     {
         return Database.Raspberrypis.FirstOrDefault(r => r.UserId == userId);
     }
 
-    public RaspberryPi CreateRaspberryPi(RaspberryPi raspberryPi)
+    public Raspberrypi CreateRaspberryPi(Raspberrypi raspberryPi)
     {
         var newRaspberryPi = Database.Raspberrypis.Add(raspberryPi).Entity;
         Database.SaveChanges();
         return newRaspberryPi;
     }
 
-    public RaspberryPi UpdateIpAddress(RaspberryPi raspberryPi, string ip)
+    public Raspberrypi UpdateIpAddress(Raspberrypi raspberryPi, string ip)
     {
         raspberryPi.IpAddress = ip;
         Database.SaveChanges();
         return raspberryPi;
     }
 
-    public RaspberryPi UpdateUserId(RaspberryPi raspberryPi, int userId)
+    public Raspberrypi UpdateUserId(Raspberrypi raspberryPi, int userId)
     {
         raspberryPi.UserId = userId;
         Database.SaveChanges();

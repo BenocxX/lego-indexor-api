@@ -13,7 +13,7 @@ public class IndexorService
     private readonly int _userId;
     private readonly IRaspberryPiBroker _raspberryPiBroker;
     private WebSocketServer _server = null!;
-    private RaspberryPi _raspberryPi = null!;
+    private Raspberrypi _raspberryPi = null!;
 
     public IndexorService(int userId)
     {
@@ -83,7 +83,7 @@ public class IndexorService
     public async Task<(string topPrediction, string sidePrediction)?> Predict(string topCamFile, string sideCamFile)
     {
         var commandLineService = new CommandLineService();
-        var result = await commandLineService.RunPython($"../lego-indexor-api.Core/machine-learning/predict.py {topCamFile} {sideCamFile}");
+        var result = await commandLineService.RunPython($"../../machine-learning/predict.py {topCamFile} {sideCamFile}");
         if (result.ExitCode != 0)
         {
             Console.WriteLine(result.StandardError);

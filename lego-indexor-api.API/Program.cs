@@ -1,5 +1,6 @@
 using System.Net;
 using lego_indexor_api.API;
+using lego_indexor_api.API.Websockets;
 using lego_indexor_api.Core;
 using lego_indexor_api.Infrastructure;
 using WebSocketManager = lego_indexor_api.API.WebSocketManager;
