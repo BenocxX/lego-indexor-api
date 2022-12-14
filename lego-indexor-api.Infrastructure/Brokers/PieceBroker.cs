@@ -66,4 +66,15 @@ public class PieceBroker : Broker, IPieceBroker
         }
         return piece;
     }
+
+    public Piece? DeletePieceById(int id)
+    {
+        var piece = GetPieceById(id);
+        if (piece != null)
+        {
+            Database.Pieces.Remove(piece);
+            Database.SaveChanges();
+        }
+        return piece;
+    }
 }

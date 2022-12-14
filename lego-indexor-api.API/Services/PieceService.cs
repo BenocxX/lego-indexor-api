@@ -42,4 +42,9 @@ public class PieceService
             _pieceBroker.UpdateDescription(currentPiece, piece.Description);
         }
     }
+
+    public void Delete(int pieceId)
+    {
+        _pieceBroker.DeletePieceById(pieceId);
+    }
 }

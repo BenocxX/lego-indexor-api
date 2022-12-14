@@ -13,4 +13,5 @@ public interface IPieceBroker
     Piece UpdateName(Piece piece, string? name);
     Piece UpdateCount(Piece piece, int? count);
     Piece UpdateDescription(Piece piece, string? description);
+    Piece? DeletePieceById(int id);
 }

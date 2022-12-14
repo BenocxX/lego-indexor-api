@@ -41,4 +41,16 @@ public class PieceController : SecurityController
         
         return Ok(new AddPieceResponse(true, true));
     }
+    
+    [HttpDelete("[controller]/{pieceId}")]
+    public ActionResult<DeletePieceResponse> Delete(DeletePieceRequest request, int pieceId)
+    {
+        if (!Authenticate(request.Token))
+            return Ok(new DeletePieceResponse(false));
+        
+        var pieceService = new PieceService(UserId);
+        pieceService.Delete(pieceId);
+
+        return Ok(new DeletePieceResponse(true));
+    }
 }
