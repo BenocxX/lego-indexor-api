@@ -1,4 +1,4 @@
-namespace lego_indexor_api.API.Responses;
+namespace lego_indexor_api.API.Responses.Pieces;
 
 public class AddPieceResponse : TokenResponse
 {

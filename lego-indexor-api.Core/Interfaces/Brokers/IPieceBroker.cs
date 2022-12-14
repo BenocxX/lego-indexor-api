@@ -5,6 +5,7 @@ namespace lego_indexor_api.Core.Interfaces.Brokers;
 public interface IPieceBroker
 {
     IEnumerable<Piece> GetPieces();
+    IEnumerable<Piece> GetPiecesByUserId(int userId);
     Piece? GetPieceById(int id);
     Piece? GetPieceByType(string type);
     Piece? UserHasPieceOfType(int userId, string type);

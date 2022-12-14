@@ -10,6 +10,11 @@ public class PieceBroker : Broker, IPieceBroker
         return Database.Pieces.ToList();
     }
 
+    public IEnumerable<Piece> GetPiecesByUserId(int userId)
+    {
+        return Database.Pieces.ToList().Where(p => p.UserId == userId);
+    }
+
     public Piece? GetPieceById(int id)
     {
         return Database.Pieces.Find(id);

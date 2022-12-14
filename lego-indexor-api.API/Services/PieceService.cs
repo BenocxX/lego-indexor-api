@@ -1,5 +1,6 @@
 using lego_indexor_api.Core.Interfaces.Brokers;
 using lego_indexor_api.Core.Models.DTOs;
+using lego_indexor_api.Core.Models.DTOs.Pieces;
 using lego_indexor_api.Core.Models.Entities;
 using lego_indexor_api.Core.Models.Mappers;
 using lego_indexor_api.Infrastructure.Brokers;
@@ -17,6 +18,11 @@ public class PieceService
         _userId = userId;
         _pieceBroker = new PieceBroker();
         _mapper = new AddPieceMapper();
+    }
+
+    public IEnumerable<Piece> GetAll()
+    {
+        return _pieceBroker.GetPiecesByUserId(_userId);
     }
 
     public void Add(AddPieceRequest request)

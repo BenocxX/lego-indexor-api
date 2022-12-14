@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace lego_indexor_api.Core.Models.DTOs;
+namespace lego_indexor_api.Core.Models.DTOs.Pieces;
 
 public class AddPieceRequest : TokenRequest
 {

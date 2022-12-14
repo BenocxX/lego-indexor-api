@@ -1,7 +1,9 @@
 using lego_indexor_api.API.Responses;
+using lego_indexor_api.API.Responses.Pieces;
 using lego_indexor_api.API.Services;
 using lego_indexor_api.Core.Interfaces.Services;
 using lego_indexor_api.Core.Models.DTOs;
+using lego_indexor_api.Core.Models.DTOs.Pieces;
 using lego_indexor_api.Core.Models.Entities;
 using lego_indexor_api.Core.Models.Mappers;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +17,18 @@ public class PieceController : SecurityController
     public PieceController(IConnectionService connectionService)
         : base(connectionService)
     { }
+
+    [HttpPost("[controller]")]
+    public ActionResult<GetPiecesResponse> Get(GetPiecesRequest request)
+    {
+        if (!Authenticate(request.Token))
+            return Ok(new AddPieceResponse(false, false));
+        
+        var pieceService = new PieceService(UserId);
+        var pieces = pieceService.GetAll();
+
+        return Ok(new GetPiecesResponse(true, pieces));
+    }
     
     [HttpPost("[controller]/add")]
     public ActionResult<AddPieceResponse> Index(AddPieceRequest request)
