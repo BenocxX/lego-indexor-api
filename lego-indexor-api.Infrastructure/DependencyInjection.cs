@@ -10,8 +10,8 @@ public static class DependencyInjection
     {
         services.AddScoped<IUserBroker, UserBroker>();
         services.AddScoped<IConnectionBroker, ConnectionBroker>();
-        services.AddScoped<IIndexorBroker, IndexorBroker>();
         services.AddScoped<IRaspberryPiBroker, RaspberryPiBroker>();
+        services.AddScoped<IPieceBroker, PieceBroker>();
         return services;
     }
 }

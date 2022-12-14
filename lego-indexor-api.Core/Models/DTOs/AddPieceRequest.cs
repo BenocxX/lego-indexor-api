@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace lego_indexor_api.Core.Models.DTOs;
 
-public class IndexRequest : TokenRequest
+public class AddPieceRequest : TokenRequest
 {
     [Required] 
     [StringLength(255)]

@@ -17,8 +17,7 @@ namespace lego_indexor_api.Core.Models.Entities
         }
 
         public virtual DbSet<Connection> Connections { get; set; } = null!;
-        public virtual DbSet<Indexor> Indexors { get; set; } = null!;
-        public virtual DbSet<Lego> Legos { get; set; } = null!;
+        public virtual DbSet<Piece> Pieces { get; set; } = null!;
         public virtual DbSet<Raspberrypi> Raspberrypis { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
 
@@ -58,29 +57,16 @@ namespace lego_indexor_api.Core.Models.Entities
                     .HasConstraintName("connection_user_id__fk");
             });
 
-            modelBuilder.Entity<Indexor>(entity =>
+            modelBuilder.Entity<Piece>(entity =>
             {
-                entity.ToTable("indexor");
-
-                entity.HasIndex(e => e.Id, "indexor_id_uindex")
-                    .IsUnique();
-
-                entity.HasIndex(e => e.UserId, "indexor_user_id_uindex")
-                    .IsUnique();
-
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.UserId).HasColumnName("user_id");
-            });
-
-            modelBuilder.Entity<Lego>(entity =>
-            {
-                entity.ToTable("lego");
+                entity.ToTable("piece");
 
                 entity.HasIndex(e => e.Id, "lego_id_uindex")
                     .IsUnique();
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .HasDefaultValueSql("nextval('lego_id_seq'::regclass)");
 
                 entity.Property(e => e.Count).HasColumnName("count");
 
@@ -95,6 +81,14 @@ namespace lego_indexor_api.Core.Models.Entities
                 entity.Property(e => e.Type)
                     .HasMaxLength(255)
                     .HasColumnName("type");
+
+                entity.Property(e => e.UserId).HasColumnName("user_id");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Pieces)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("piece_user_id_fk");
             });
 
             modelBuilder.Entity<Raspberrypi>(entity =>
