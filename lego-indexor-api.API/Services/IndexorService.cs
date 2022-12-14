@@ -80,7 +80,7 @@ public class IndexorService
         return response;
     }
 
-    public async Task<(string topPrediction, string sidePrediction)?> Predict(string topCamFile, string sideCamFile)
+    public async Task<List<string>?> Predict(string topCamFile, string sideCamFile)
     {
         var commandLineService = new CommandLineService();
         var result = await commandLineService.RunPython($"../../machine-learning/predict.py {topCamFile} {sideCamFile}");
@@ -102,7 +102,11 @@ public class IndexorService
         var topPrediction = predictions[0];
         var sidePrediction = predictions[1];
         
-        return (topPrediction, sidePrediction);
+        return new List<string>
+        {
+            topPrediction,
+            sidePrediction
+        };
     }
     
     private async Task<WebSocketRequest> GetServerResponse(WebSocketServer server)

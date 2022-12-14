@@ -14,6 +14,15 @@ public class IndexorController : SecurityController
         : base(connectionService)
     { }
 
+    [HttpPost("/index")]
+    public ActionResult<IndexResponse> Index(IndexRequest request)
+    {
+        if (!Authenticate(request.Token))
+            return Ok(new IndexResponse(false, false));
+        
+        return Ok(new IndexResponse(true, true));
+    }
+
     [HttpPost("/scan")]
     public async Task<ActionResult<ScanResponse>> Scan(ScanRequest request)
     {
@@ -35,10 +44,13 @@ public class IndexorController : SecurityController
         
         if (predictions == null) 
             return Ok(new ScanResponse(false, true));
+
+        foreach (var prediction in predictions)
+        {
+            Console.WriteLine($"Prediction: {prediction}");
+        }
         
-        Console.WriteLine($"Prediction: {predictions}");
-        
-        return Ok(new ScanResponse(true, true));
+        return Ok(new ScanResponse(true, true, predictions));
     }
 
     [HttpPost("/learn")]
