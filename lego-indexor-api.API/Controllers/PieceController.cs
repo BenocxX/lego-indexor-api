@@ -2,6 +2,8 @@ using lego_indexor_api.API.Responses;
 using lego_indexor_api.API.Services;
 using lego_indexor_api.Core.Interfaces.Services;
 using lego_indexor_api.Core.Models.DTOs;
+using lego_indexor_api.Core.Models.Entities;
+using lego_indexor_api.Core.Models.Mappers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace lego_indexor_api.API.Controllers;
@@ -10,7 +12,7 @@ namespace lego_indexor_api.API.Controllers;
 [Route("api/v1/")]
 public class PieceController : SecurityController
 {
-    public PieceController(IConnectionService connectionService) 
+    public PieceController(IConnectionService connectionService)
         : base(connectionService)
     { }
     
@@ -21,6 +23,7 @@ public class PieceController : SecurityController
             return Ok(new AddPieceResponse(false, false));
 
         var pieceService = new PieceService(UserId);
+        pieceService.Add(request);
         
         return Ok(new AddPieceResponse(true, true));
     }
